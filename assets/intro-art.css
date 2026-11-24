@@ -60,3 +60,10 @@ html:has(.tdgtd-intro.is-gated.over-plan){cursor:pointer} /* only the plan itsel
 .tdgtd-intro .tdgtd-sub{opacity:0!important;transform:translateY(8px)!important;transition:opacity .9s ease .35s,transform .9s ease .35s!important}
 .tdgtd-intro.sub-on .tdgtd-sub{opacity:1!important;transform:none!important}
 
+
+/* ── while the intro is on screen: the artifact's gray paper and About button (html.intro-art-on, set by intro-art.js) ── */
+html.intro-art-on body{background:#cfd0ce;color:#121514}
+html.intro-art-on body:before,html.intro-art-on body:after{display:none}
+html.intro-art-on .paper-canvas{filter:none;background:#cfd0ce}
+html.intro-art-on .ab-open{font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:400;letter-spacing:.1em;border-radius:999px;background:#ececea;border-color:#111;color:#111}
+html.intro-art-on .ab-open:hover{background:#111;color:#ececea}
