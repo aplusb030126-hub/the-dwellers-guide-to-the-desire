@@ -269,7 +269,7 @@
 
   var lastP = -1;
   function render(p) {
-    if (Math.abs(p - lastP) < 0.0005) return; lastP = p;
+    if (Math.abs(p - lastP) < 0.00003) return; lastP = p;
     var snap = ease(clamp((p - 0.78) / 0.14)); // final straighten-up after the loose assembly
     tiles.forEach(function (tl) {
       var t = ease(clamp((p - tl.d) / tl.span));
@@ -286,7 +286,7 @@
       tl.el.style.transform = 'translate(' + x + 'px,' + y + 'px) rotate(' + r + 'deg) scale(' + sc + ')';
       tl.el.style.opacity = o;
     });
-    var lead = clamp(1 - p / 0.4);
+    var lq = clamp(p / 0.3), lead = 1 - lq * lq * (3 - 2 * lq); // eased: the question drifts off softly, no linear start/stop
     root.style.setProperty('--lead', lead.toFixed(3));
     root.style.setProperty('--lift', ((1 - lead) * 40).toFixed(1) + 'px');
     logo.style.setProperty('--frame', clamp((p - 0.58) / 0.2).toFixed(3));
@@ -294,12 +294,14 @@
   }
 
   function progress() {
+    if (window.__introP != null) return window.__introP; // autoplay: exact progress, no scrolling
     if (reduce) return 1;
     var r = root.getBoundingClientRect();
     var total = r.height - window.innerHeight * 2.8; // then 100vh hold on the finished logo, then 80vh crossfade into the trend sheet
     return total > 0 ? clamp(-r.top / total) : 1;
   }
 
+  (function loop() { if (window.__introP != null && g) render(window.__introP); requestAnimationFrame(loop); })();
   var ticking = false;
   // the paper's mouse reveal stays off until the intro title has scrolled away
   function gate() { window.__tdgtdIntro = root.getBoundingClientRect().bottom > window.innerHeight * 0.35; }

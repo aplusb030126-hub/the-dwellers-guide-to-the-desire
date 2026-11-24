@@ -1,0 +1,62 @@
+/* ═════════ INTRO — taken from the TDGTD artifact (plan logo + gathering words + click gate) ═════════
+   Loaded after theme.css: undoes the site theme's intro overrides so the intro looks as it did in the artifact. */
+.tdgtd-intro{--f-type:"Courier Prime","Courier New",monospace;--f-mono:"IBM Plex Mono",ui-monospace,monospace;--f-display:"Space Mono","IBM Plex Mono",monospace}
+.tdgtd-q{font-family:"Inter","Helvetica Neue",Arial,sans-serif;font-weight:700;font-size:clamp(22px,3.2vw,54px);line-height:1.1;letter-spacing:.2em;text-transform:uppercase;padding-left:.2em;color:var(--ink)}
+.tdgtd-q2{font-family:"Inter","Helvetica Neue",Arial,sans-serif;font-weight:600;font-size:clamp(13px,1.25vw,19px);letter-spacing:.24em;text-transform:none;padding-left:.24em;color:var(--ink)}
+.tdgtd-kicker{font-family:"Inter","Helvetica Neue",Arial,sans-serif;font-weight:700;font-size:clamp(11px,1vw,15px);letter-spacing:.34em;padding-left:.34em}
+.tdgtd-desc{font-family:"Courier Prime","Courier New",monospace;font-weight:400;color:#3f4845}
+.tdgtd-foot{font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:400;letter-spacing:.09em;text-transform:none;color:#3f4845}
+.tdgtd-logo{filter:none}
+@media (max-width:520px){.tdgtd-q{letter-spacing:.12em;padding-left:.12em}.tdgtd-kicker{font-size:10px;letter-spacing:.2em}}
+
+/* intro logo: the drawn TDGTD plan replaces the assembling tile letters */
+.tdgtd-logo{display:block;width:min(86vw,1100px,(100svh - 260px) * 4.45)}
+.tdgtd-logo .tdgtd-cell,.tdgtd-logo .tdgtd-tiles{display:none!important}
+.tdgtd-svg{display:block;width:100%;height:auto;opacity:calc(1 - var(--lead,1));transform:translateY(calc(var(--lead,1) * 24px)) scale(calc(1 - var(--lead,1) * .04));transform-origin:50% 50%}
+@media (prefers-reduced-motion:reduce){.tdgtd-svg{opacity:1;transform:none}}
+/* logo sits straight on the gray paper, slightly see-through like ink on tracing paper */
+.tdgtd-svg{opacity:calc((1 - var(--lead,1)) * .82);mix-blend-mode:multiply}
+@media (prefers-reduced-motion:reduce){.tdgtd-svg{opacity:.82}}
+/* a faint frosted sheet under the logo so it reads apart from the paper */
+.tdgtd-svg{background:rgba(255,255,255,.42);outline:1px solid rgba(17,17,17,.14);outline-offset:-1px;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);mix-blend-mode:normal;opacity:calc((1 - var(--lead,1)) * .9)}
+
+/* the light sheet now lives inside the SVG, filling only the plan outline */
+.tdgtd-svg{background:none;outline:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+
+
+
+/* square word-tiles that gather into the plan's footprint; the drawn plan fades in after them */
+.tdgtd-logo{position:relative}
+.tdgtd-svg{opacity:calc(var(--logo,0) * .9);transform:none}
+.tdgtd-words{position:absolute;inset:0;pointer-events:none;overflow:visible;z-index:2}
+.tdgtd-words span{position:absolute;left:0;top:0;height:var(--th,14px);line-height:var(--th,14px);padding:0 var(--px,4px);box-sizing:border-box;white-space:nowrap;overflow:hidden;text-align:center;
+  background:#e9e9e7;color:#2e2e2e;letter-spacing:-.01em;will-change:transform,opacity;opacity:0}
+.tdgtd-words span.inv{animation:tdgtd-blink 2s steps(1) infinite}
+@keyframes tdgtd-blink{0%,88%{background:#4c4c4b;color:#ececea}89%,100%{background:#e9e9e7;color:#2e2e2e}}
+@media (prefers-reduced-motion:reduce){.tdgtd-words span.inv{animation:none;background:#4c4c4b;color:#ececea}}
+
+/* a longer intro: more scroll for the words to gather */
+.tdgtd-intro{height:960vh}
+
+/* the logo is interactive: hovering a room widens it */
+svg.tdgtd-svg{height:auto;pointer-events:auto;overflow:visible}
+
+/* a small square cursor above the logo's top-right corner, appearing with the logo and blinking */
+.tdgtd-logo::after{content:"";position:absolute;left:calc((1042.5 - 48) / 1014 * 100%);top:calc((31.4 - 22) / 228 * 100%);width:calc(21 / 1014 * 100%);aspect-ratio:1;
+  background:#2e2e2e;opacity:calc(var(--logo,0) * .9);pointer-events:none;animation:tdgtd-cursor 1.1s steps(1) infinite}
+@keyframes tdgtd-cursor{50%{visibility:hidden}}
+@media (prefers-reduced-motion:reduce){.tdgtd-logo::after{animation:none}}
+
+/* the intro waits for a click */
+.tdgtd-click{font-weight:400;margin-top:clamp(18px,3vh,30px);font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#4a4a49;opacity:0;transition:opacity .5s}
+.tdgtd-intro.is-gated .tdgtd-click{opacity:1;animation:tdgtd-hint 1.6s ease-in-out infinite}
+@keyframes tdgtd-hint{50%{opacity:.35}}
+.tdgtd-intro.is-gated .tdgtd-foot .s{visibility:hidden}
+html:has(.tdgtd-intro.is-gated.over-plan){cursor:pointer} /* only the plan itself is clickable */
+.tdgtd-veil{position:fixed;inset:0;z-index:70;background:#e2e2e0;opacity:0;pointer-events:none}
+.tdgtd-intro.is-playing .tdgtd-foot .s{visibility:hidden}
+
+/* the tagline arrives right behind the logo instead of at the very end */
+.tdgtd-intro .tdgtd-sub{opacity:0!important;transform:translateY(8px)!important;transition:opacity .9s ease .35s,transform .9s ease .35s!important}
+.tdgtd-intro.sub-on .tdgtd-sub{opacity:1!important;transform:none!important}
+
