@@ -67,3 +67,6 @@ html.intro-art-on body:before,html.intro-art-on body:after{display:none}
 html.intro-art-on .paper-canvas{filter:none;background:#cfd0ce}
 html.intro-art-on .ab-open{font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:400;letter-spacing:.1em;border-radius:999px;background:#ececea;border-color:#111;color:#111}
 html.intro-art-on .ab-open:hover{background:#111;color:#ececea}
+
+/* ── cursor: the artifact's thin mono coordinates (X 0613 Y 00581), everywhere on the site ── */
+.cursor .cursor-coord,.cursor .cursor-tag{font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:400;letter-spacing:.08em;text-transform:uppercase}
